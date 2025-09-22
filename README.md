@@ -2,7 +2,6 @@
 
 ## Overview
 
-“Application of Artificial Intelligence Methods in the Requirements Engineering Management Process.”
 The research explores how AI techniques — particularly NLP, transformer-based models, and graph-based representations — can enhance the extraction, classification, and management of requirements.
 The core contribution is an end-to-end pipeline that transforms raw elicited requirements into a semantic requirement graph, enabling automation, traceability, and explainability in the Requirements Engineering Management Process (REMP).
 
