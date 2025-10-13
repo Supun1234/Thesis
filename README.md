@@ -10,6 +10,8 @@ The core contribution is an end-to-end pipeline that transforms raw elicited req
 Input: Raw elicited requirement sentences (unstructured text)
 
 Output: Structured, classified, and explainable requirement graphs (Neo4j)
+<img width="1124" height="757" alt="image" src="https://github.com/user-attachments/assets/e2135b7f-85f2-4a2c-9ea1-ea5dd00970ac" />
+
 
 ##  Pipeline Steps
 
