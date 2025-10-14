@@ -138,17 +138,6 @@ REQ_005 {
 
 ---
 
-## Summary
-
-| # | INPUT (Raw Text) | OUTPUT (Structured) |
-|---|------------------|---------------------|
-| 1 | "As a user, I want to login quickly..." | Actor: user \| Goal: login quickly \| Type: NFR-Performance \| Conf: 0.92 |
-| 2 | "The system shall encrypt all user data..." | Actor: system \| Goal: encrypt data \| Type: NFR-Security \| Conf: 0.96 |
-| 3 | "As an admin, I want to delete user accounts..." | Actor: admin \| Goal: delete accounts \| Type: FR \| Conf: 0.89 |
-| 4 | "The system must respond within 2 seconds..." | Actor: system \| Goal: respond quickly \| Type: NFR-Performance \| Conf: 0.94 |
-| 5 | "As a customer, I want to view order history..." | Actor: customer \| Goal: view history \| Type: FR \| Conf: 0.91 |
-
-**System Performance:** 88% Extraction Accuracy | 92% Classification Accuracy | 85% Automation
 
 ## Datasets Used
 
