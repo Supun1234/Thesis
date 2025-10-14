@@ -38,9 +38,6 @@ Validation & Feedback Loop – low-confidence cases flagged for manual review.
 "As a user, I want to login quickly so that I can access my account"
 ```
 
-### BLACK BOX PROCESSING:
-```
-```
 
 ### Y (OUTPUT):
 ```
@@ -77,9 +74,6 @@ Status: ✓ Validated and stored in Neo4j
 "The system shall encrypt all user data using AES-256 encryption"
 ```
 
-### BLACK BOX PROCESSING:
-```
-```
 
 ### Y (OUTPUT):
 ```
@@ -116,9 +110,6 @@ Status: ✓ Validated and stored in Neo4j
 "As an admin, I want to delete user accounts so that I can manage the database"
 ```
 
-### BLACK BOX PROCESSING:
-```
-```
 
 ### Y (OUTPUT):
 ```
@@ -155,9 +146,6 @@ Status: ✓ Validated and stored in Neo4j
 "The system must respond to user requests within 2 seconds"
 ```
 
-### BLACK BOX PROCESSING:
-```
-```
 
 ### Y (OUTPUT):
 ```
@@ -194,9 +182,6 @@ Status: ✓ Validated and stored in Neo4j
 "As a customer, I want to view my order history so that I can track purchases"
 ```
 
-### BLACK BOX PROCESSING:
-```
-```
 
 ### Y (OUTPUT):
 ```
