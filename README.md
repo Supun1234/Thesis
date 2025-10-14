@@ -31,111 +31,200 @@ Validation & Feedback Loop – low-confidence cases flagged for manual review.
 
 ## Examples
 
----
-
 ## Example 1
 
-**INPUT:**
+### X (INPUT):
 ```
 "As a user, I want to login quickly so that I can access my account"
 ```
 
-**OUTPUT:**
+### BLACK BOX PROCESSING:
 ```
-REQ_001 {
-  Actor: "user"
-  Goal: "login quickly"
-  Rationale: "access my account"
-  Type: Non-Functional (NFR)
-  Subtype: Performance
-  Confidence: 0.92
-}
+```
+
+### Y (OUTPUT):
+```
+Requirement ID: REQ_001
+
+Structured Components:
+├─ Actor: "user"
+├─ Goal: "login quickly"
+└─ Rationale: "access my account"
+
+Classification:
+├─ Type: Non-Functional (NFR)
+├─ Subtype: Performance
+└─ Confidence: 0.92
+
+Explainability (SHAP):
+└─ Key tokens: "quickly" (0.31), "login" (0.24), "access" (0.18)
+
+Neo4j Graph Structure:
+(REQ_001:Requirement)-[:HAS_ACTOR]→(Actor {name: "user"})
+(REQ_001:Requirement)-[:HAS_GOAL]→(Goal {text: "login quickly"})
+(REQ_001:Requirement)-[:HAS_RATIONALE]→(Rationale {text: "access my account"})
+(REQ_001:Requirement)-[:CLASSIFIED_AS]→(Performance {confidence: 0.92})
+
+Status: ✓ Validated and stored in Neo4j
 ```
 
 ---
 
 ## Example 2
 
-**INPUT:**
+### X (INPUT):
 ```
 "The system shall encrypt all user data using AES-256 encryption"
 ```
 
-**OUTPUT:**
+### BLACK BOX PROCESSING:
 ```
-REQ_002 {
-  Actor: "system"
-  Goal: "encrypt all user data"
-  Rationale: "using AES-256 encryption"
-  Type: Non-Functional (NFR)
-  Subtype: Security
-  Confidence: 0.96
-}
+```
+
+### Y (OUTPUT):
+```
+Requirement ID: REQ_002
+
+Structured Components:
+├─ Actor: "system"
+├─ Goal: "encrypt all user data"
+└─ Rationale: "using AES-256 encryption"
+
+Classification:
+├─ Type: Non-Functional (NFR)
+├─ Subtype: Security
+└─ Confidence: 0.96
+
+Explainability (SHAP):
+└─ Key tokens: "encrypt" (0.38), "AES-256" (0.29), "data" (0.22)
+
+Neo4j Graph Structure:
+(REQ_002:Requirement)-[:HAS_ACTOR]→(Actor {name: "system"})
+(REQ_002:Requirement)-[:HAS_GOAL]→(Goal {text: "encrypt all user data"})
+(REQ_002:Requirement)-[:HAS_RATIONALE]→(Rationale {text: "using AES-256 encryption"})
+(REQ_002:Requirement)-[:CLASSIFIED_AS]→(Security {confidence: 0.96})
+
+Status: ✓ Validated and stored in Neo4j
 ```
 
 ---
 
 ## Example 3
 
-**INPUT:**
+### X (INPUT):
 ```
 "As an admin, I want to delete user accounts so that I can manage the database"
 ```
 
-**OUTPUT:**
+### BLACK BOX PROCESSING:
 ```
-REQ_003 {
-  Actor: "admin"
-  Goal: "delete user accounts"
-  Rationale: "manage the database"
-  Type: Functional (FR)
-  Subtype: N/A
-  Confidence: 0.89
-}
+```
+
+### Y (OUTPUT):
+```
+Requirement ID: REQ_003
+
+Structured Components:
+├─ Actor: "admin"
+├─ Goal: "delete user accounts"
+└─ Rationale: "manage the database"
+
+Classification:
+├─ Type: Functional (FR)
+├─ Subtype: N/A (Functional requirement)
+└─ Confidence: 0.89
+
+Explainability (SHAP):
+└─ Key tokens: "delete" (0.35), "accounts" (0.27), "admin" (0.19)
+
+Neo4j Graph Structure:
+(REQ_003:Requirement)-[:HAS_ACTOR]→(Actor {name: "admin"})
+(REQ_003:Requirement)-[:HAS_GOAL]→(Goal {text: "delete user accounts"})
+(REQ_003:Requirement)-[:HAS_RATIONALE]→(Rationale {text: "manage the database"})
+(REQ_003:Requirement)-[:CLASSIFIED_AS]→(Functional {confidence: 0.89})
+
+Status: ✓ Validated and stored in Neo4j
 ```
 
 ---
 
 ## Example 4
 
-**INPUT:**
+### X (INPUT):
 ```
 "The system must respond to user requests within 2 seconds"
 ```
 
-**OUTPUT:**
+### BLACK BOX PROCESSING:
 ```
-REQ_004 {
-  Actor: "system"
-  Goal: "respond to user requests"
-  Rationale: "within 2 seconds"
-  Type: Non-Functional (NFR)
-  Subtype: Performance
-  Confidence: 0.94
-}
+```
+
+### Y (OUTPUT):
+```
+Requirement ID: REQ_004
+
+Structured Components:
+├─ Actor: "system"
+├─ Goal: "respond to user requests"
+└─ Rationale: "within 2 seconds"
+
+Classification:
+├─ Type: Non-Functional (NFR)
+├─ Subtype: Performance
+└─ Confidence: 0.94
+
+Explainability (SHAP):
+└─ Key tokens: "2 seconds" (0.42), "respond" (0.31), "requests" (0.18)
+
+Neo4j Graph Structure:
+(REQ_004:Requirement)-[:HAS_ACTOR]→(Actor {name: "system"})
+(REQ_004:Requirement)-[:HAS_GOAL]→(Goal {text: "respond to user requests"})
+(REQ_004:Requirement)-[:HAS_RATIONALE]→(Rationale {text: "within 2 seconds"})
+(REQ_004:Requirement)-[:CLASSIFIED_AS]→(Performance {confidence: 0.94})
+
+Status: ✓ Validated and stored in Neo4j
 ```
 
 ---
 
 ## Example 5
 
-**INPUT:**
+### X (INPUT):
 ```
 "As a customer, I want to view my order history so that I can track purchases"
 ```
 
-**OUTPUT:**
+### BLACK BOX PROCESSING:
 ```
-REQ_005 {
-  Actor: "customer"
-  Goal: "view order history"
-  Rationale: "track purchases"
-  Type: Functional (FR)
-  Subtype: N/A
-  Confidence: 0.91
-}
 ```
 
+### Y (OUTPUT):
+```
+Requirement ID: REQ_005
+
+Structured Components:
+├─ Actor: "customer"
+├─ Goal: "view order history"
+└─ Rationale: "track purchases"
+
+Classification:
+├─ Type: Functional (FR)
+├─ Subtype: N/A (Functional requirement)
+└─ Confidence: 0.91
+
+Explainability (SHAP):
+└─ Key tokens: "view" (0.33), "order history" (0.28), "track" (0.21)
+
+Neo4j Graph Structure:
+(REQ_005:Requirement)-[:HAS_ACTOR]→(Actor {name: "customer"})
+(REQ_005:Requirement)-[:HAS_GOAL]→(Goal {text: "view order history"})
+(REQ_005:Requirement)-[:HAS_RATIONALE]→(Rationale {text: "track purchases"})
+(REQ_005:Requirement)-[:CLASSIFIED_AS]→(Functional {confidence: 0.91})
+
+Status: ✓ Validated and stored in Neo4j
+```
+
+---
 ---
 
 
