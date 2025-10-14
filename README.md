@@ -30,8 +30,6 @@ Explainability – SHAP/LIME highlights key tokens influencing classification.
 Validation & Feedback Loop – low-confidence cases flagged for manual review.
 
 ## Examples
-# AI-Driven Requirements Engineering
-## Input → Output Examples
 
 ---
 
