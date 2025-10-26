@@ -60,7 +60,8 @@ Neo4j graph + AI classification directly improves their products
  <img width="1904" height="1348" alt="image" src="https://github.com/user-attachments/assets/1a7b142b-6902-4d38-9ead-33ad368ca43c" />
 
  ###  8. DATA FLOW DIAGRAM - END-TO-END PROCESS
- ![Uploading image.png…]()
+<img width="755" height="1338" alt="image" src="https://github.com/user-attachments/assets/a6acc515-495b-4fc2-9c3e-ad4c8004bd25" />
+
 
 
 
