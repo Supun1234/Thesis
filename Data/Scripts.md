@@ -166,9 +166,9 @@ end note
 
 @enduml
 
-/' ============================================================
+
    2. SEQUENCE DIAGRAM - END-TO-END PROCESS FLOW
-   ============================================================ '/
+
 
 @startuml REMP_Sequence_EndToEnd
 !theme cerulean-outline
@@ -278,9 +278,9 @@ deactivate Pipeline
 
 @enduml
 
-/' ============================================================
+
    3. ACTIVITY DIAGRAM - END-TO-END WORKFLOW
-   ============================================================ '/
+  
 
 @startuml REMP_Activity_EndToEnd
 !theme cerulean-outline
@@ -367,9 +367,9 @@ end note
 
 @enduml
 
-/' ============================================================
+
    4. COMPONENT DIAGRAM - SYSTEM ARCHITECTURE
-   ============================================================ '/
+
 
 @startuml REMP_Component_EndToEnd
 !theme cerulean-outline
@@ -467,9 +467,9 @@ end note
 
 @enduml
 
-/' ============================================================
+
    5. USE CASE DIAGRAM
-   ============================================================ '/
+
 
 @startuml REMP_UseCase_EndToEnd
 !theme cerulean-outline
@@ -546,9 +546,9 @@ end note
 
 @enduml
 
-/' ============================================================
+
    6. STATE DIAGRAM - REQUIREMENT LIFECYCLE
-   ============================================================ '/
+   
 
 @startuml REMP_State_EndToEnd
 !theme cerulean-outline
@@ -610,9 +610,9 @@ end note
 
 @enduml
 
-/' ============================================================
+
    7. DEPLOYMENT DIAGRAM - PROCESS INFRASTRUCTURE
-   ============================================================ '/
+   
 
 @startuml REMP_Deployment_EndToEnd
 !theme cerulean-outline
@@ -692,9 +692,9 @@ end note
 
 @enduml
 
-/' ============================================================
+
    8. DATA FLOW DIAGRAM - END-TO-END PROCESS
-   ============================================================ '/
+ 
 
 @startuml REMP_DataFlow_EndToEnd
 !theme cerulean-outline
