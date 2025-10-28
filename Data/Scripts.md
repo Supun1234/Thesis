@@ -1,11 +1,11 @@
-/' ============================================================
+
    UPDATED: END-TO-END PROCESS FOCUS (NO SRS GENERATION)
    GAI = Process Enhancement, NOT Document Generation
-   ============================================================ '/
 
-/' ============================================================
+
+
    1. SYSTEM ARCHITECTURE - CLASS DIAGRAM
-   ============================================================ '/
+ 
 
 @startuml REMP_Class_Diagram
 !theme cerulean-outline
