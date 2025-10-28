@@ -8,18 +8,28 @@
  
 ---
 @startuml REMP_Class_Diagram
+
 !theme cerulean-outline
+
 skinparam linetype ortho
 
 title GAI-Enhanced End-to-End REMP - Class Diagram
+
 package "Core Processing Models" {
+
     class BERTNERExtractor {
+    
         - model: BertForTokenClassification
+        
         - tokenizer: BertTokenizer
+        
         - confidence_threshold: float = 0.90
+        
         --
         + extract_agr(text: str): AGRTriplet
+        
         + get_confidence(): float
+        
         - preprocess(text: str): List[Token]
     }
 
