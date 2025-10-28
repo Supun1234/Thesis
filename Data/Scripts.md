@@ -6,13 +6,12 @@
 
    1. SYSTEM ARCHITECTURE - CLASS DIAGRAM
  
-
+---
 @startuml REMP_Class_Diagram
 !theme cerulean-outline
 skinparam linetype ortho
 
 title GAI-Enhanced End-to-End REMP - Class Diagram
-
 package "Core Processing Models" {
     class BERTNERExtractor {
         - model: BertForTokenClassification
@@ -166,6 +165,7 @@ end note
 
 @enduml
 
+---
 
    2. SEQUENCE DIAGRAM - END-TO-END PROCESS FLOW
 
