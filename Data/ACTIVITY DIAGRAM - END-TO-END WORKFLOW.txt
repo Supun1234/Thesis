@@ -1,0 +1,84 @@
+@startuml REMP_Activity_EndToEnd
+!theme cerulean-outline
+
+title GAI-Enhanced End-to-End REMP - Workflow
+
+start
+
+:Receive Raw Requirement Text;
+note right: INPUT
+
+partition "Phase 1: Input Quality" {
+    if (Input Complete & Clear?) then (no)
+        :GAI: Complete/Clarify Input;
+        note right
+          Generate complete requirement
+          Make vague requirements specific
+        end note
+    else (yes)
+    endif
+}
+
+partition "Phase 2: Extraction (BERT NER)" {
+    :Extract Actor-Goal-Rationale;
+    
+    if (Confidence >= 0.90?) then (yes)
+    else (no)
+        :GAI: Clarify Ambiguity;
+        :Re-extract with BERT;
+    endif
+    
+    :Calculate Weighted Confidence;
+}
+
+partition "Phase 3: Classification (NoRBERT)" {
+    :Classify FR/NFR + Subtypes;
+    
+    if (Confidence >= 0.90?) then (yes)
+    else (no)
+        :GAI: Validate with Reasoning;
+        :Boost Combined Confidence;
+    endif
+}
+
+partition "Phase 4: Quality Validation" {
+    :Check SMART Criteria;
+    :Check Completeness;
+    :Check Ambiguity;
+    
+    if (Quality Score >= 0.90?) then (yes)
+    else (no)
+        :GAI: Suggest Improvements;
+        if (Accept?) then (yes)
+            :Apply Improvements;
+        else (no)
+            :Flag for Manual Review;
+        endif
+    endif
+}
+
+partition "Phase 5: Neo4j Graph Storage" {
+    :Create Requirement Node;
+    :Create AGR Sub-nodes;
+    :Add Classification Properties;
+    :Store Confidence & Quality Scores;
+}
+
+partition "Phase 6: Traceability Discovery" {
+    :GAI: Discover Semantic Links;
+    :Create Relationship Edges;
+    :Store in Graph;
+}
+
+:Return Neo4j Node ID;
+note right: OUTPUT: Graph Node
+
+stop
+
+note right of "Neo4j Graph Storage"
+  PRIMARY OUTPUT:
+  Queryable Knowledge Graph
+  NOT documents
+end note
+
+@enduml

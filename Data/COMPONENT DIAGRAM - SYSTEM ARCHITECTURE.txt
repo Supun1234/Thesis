@@ -1,0 +1,95 @@
+@startuml REMP_Component_EndToEnd
+!theme cerulean-outline
+
+title GAI-Enhanced End-to-End REMP - System Architecture
+
+package "User Interface Layer" {
+    [Web Dashboard\n(Streamlit)] as WebUI
+    [REST API\n(FastAPI)] as API
+    [NL Query Interface] as NLQuery
+}
+
+package "Business Logic Layer" {
+    component "End-to-End Pipeline" as Pipeline {
+        [Process Orchestrator] as Orch
+        [Input Quality Gate] as InputQG
+        [Output Quality Gate] as OutputQG
+    }
+}
+
+package "AI Processing Layer" {
+    component "Extraction Module" {
+        [BERT NER] as BERT
+        [spaCy (Fallback)] as spaCy
+    }
+    
+    component "Classification Module" {
+        [NoRBERT] as NoRBERT
+        [Multi-Label Processor] as MultiLabel
+    }
+    
+    component "Validation Module" {
+        [SMART Checker] as SMART
+        [Ambiguity Detector] as Ambiguity
+    }
+}
+
+package "GAI Enhancement Layer" {
+    component "Process Enhancer" {
+        [Input Completer] as Complete
+        [Ambiguity Clarifier] as Clarify
+        [Classification Validator] as Validate
+        [Quality Improver] as Improve
+        [Relationship Discoverer] as Discover
+        [NL-to-Cypher] as NLCypher
+    }
+}
+
+package "Knowledge Graph Layer" {
+    database "Neo4j\nKnowledge Graph" as Neo4j {
+        [Requirement Nodes] as ReqNodes
+        [AGR Components] as AGRNodes
+        [Traceability Links] as TraceLinks
+    }
+    
+    database "Vector Store\n(Embeddings)" as Vector
+}
+
+package "External Services" {
+    [GPT-4 API\n(Optional)] as GPT4
+    [Ollama\n(Local LLM)] as Ollama
+}
+
+' Connections
+WebUI --> API
+NLQuery --> API
+API --> Pipeline
+
+Pipeline --> BERT
+Pipeline --> NoRBERT
+Pipeline --> SMART
+Pipeline --> Complete
+Pipeline --> Clarify
+Pipeline --> Validate
+
+Complete --> GPT4 : cloud
+Complete --> Ollama : local fallback
+
+Pipeline --> Neo4j : store
+Pipeline --> Vector : embeddings
+Discover --> Neo4j : read/write links
+NLCypher --> Neo4j : query
+
+note right of Pipeline
+  Core Output:
+  Neo4j Knowledge Graph
+  with structured requirements
+end note
+
+note right of Complete
+  GAI Role:
+  Process Enhancement
+  NOT document creation
+end note
+
+@enduml

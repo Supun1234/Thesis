@@ -1,0 +1,170 @@
+---
+@startuml REMP_Class_Diagram
+
+!theme cerulean-outline
+
+skinparam linetype ortho
+
+title GAI-Enhanced End-to-End REMP - Class Diagram
+
+package "Core Processing Models" {
+
+    class BERTNERExtractor {
+    
+        - model: BertForTokenClassification
+        
+        - tokenizer: BertTokenizer
+        
+        - confidence_threshold: float = 0.90
+        
+        --
+        + extract_agr(text: str): AGRTriplet
+        
+        + get_confidence(): float
+        
+        - preprocess(text: str): List[Token]
+    }
+
+    class NoRBERTClassifier {
+        - model: BertForSequenceClassification
+        - label_map: Dict
+        - nfr_subtypes: List[str]
+        --
+        + classify(goal: str): Classification
+        + get_probabilities(): Dict
+        - apply_sigmoid(logits): ndarray
+    }
+
+    class Neo4jGraphDB {
+        - driver: GraphDatabase
+        - uri: str
+        --
+        + add_requirement(req: Requirement): str
+        + add_relationship(req1, req2, type): void
+        + query_cypher(query: str): List
+        + find_similar_requirements(req_id): List
+        + get_traceability_graph(): Graph
+    }
+}
+
+package "GAI Process Enhancement Layer" {
+    class GAIProcessEnhancer {
+        - api_key: str
+        - model: str = "gpt-4"
+        - use_local: bool = False
+        --
+        + complete_partial_input(text: str): str
+        + clarify_ambiguity(vague: str): str
+        + validate_classification(req, pred): ValidationResult
+        + improve_quality(req: str): str
+        + discover_relationships(reqs: List): List[Relationship]
+        + generate_cypher_from_nl(query: str): str
+    }
+
+    class LocalLLM {
+        - model: str = "llama3"
+        - ollama_url: str
+        --
+        + generate(prompt: str): str
+        + is_available(): bool
+    }
+    
+    note right of GAIProcessEnhancer
+      GAI Role: Process Enhancement
+      NOT document generation
+    end note
+}
+
+package "Data Models" {
+    class Requirement {
+        + id: str
+        + text: str
+        + actor: str
+        + goal: str
+        + rationale: str
+        + type: str
+        + nfr_subtype: str
+        + confidence: float
+        + shap_values: Dict
+        + quality_score: float
+        --
+        + to_neo4j_node(): Dict
+        + is_high_quality(): bool
+    }
+
+    class AGRTriplet {
+        + actor: str
+        + goal: str
+        + rationale: str
+        + confidence_scores: Dict
+        --
+        + is_complete(): bool
+        + get_weighted_confidence(): float
+    }
+
+    class Classification {
+        + type: str
+        + subtype: str
+        + confidence: float
+        + gai_validated: bool
+        + explanation: str
+    }
+    
+    class TraceabilityLink {
+        + from_req: str
+        + to_req: str
+        + relationship_type: str
+        + confidence: float
+        + reasoning: str
+    }
+}
+
+package "End-to-End Pipeline" {
+    class REMPEndToEndPipeline {
+        - bert_extractor: BERTNERExtractor
+        - nobert_classifier: NoRBERTClassifier
+        - gai_enhancer: GAIProcessEnhancer
+        - neo4j_db: Neo4jGraphDB
+        - validator: RequirementValidator
+        --
+        + process_requirement(text: str): Requirement
+        + process_batch(texts: List[str]): List[Requirement]
+        - enhance_input_quality(text): str
+        - store_in_knowledge_graph(req): str
+        + query_graph_nl(query: str): List
+    }
+
+    class RequirementValidator {
+        - completeness_threshold: float
+        - quality_rules: List
+        --
+        + validate(req: Requirement): ValidationReport
+        + check_ambiguity(text: str): List[Issue]
+        + check_smart_criteria(req): float
+    }
+}
+
+' Relationships
+REMPEndToEndPipeline --> BERTNERExtractor : uses
+REMPEndToEndPipeline --> NoRBERTClassifier : uses
+REMPEndToEndPipeline --> GAIProcessEnhancer : enhances with
+REMPEndToEndPipeline --> Neo4jGraphDB : stores in
+REMPEndToEndPipeline --> RequirementValidator : validates
+REMPEndToEndPipeline --> TraceabilityLink : creates
+
+BERTNERExtractor --> AGRTriplet : produces
+NoRBERTClassifier --> Classification : produces
+GAIProcessEnhancer --> LocalLLM : fallback
+
+REMPEndToEndPipeline --> Requirement : creates
+Requirement --> AGRTriplet : contains
+Requirement --> Classification : contains
+
+note bottom of REMPEndToEndPipeline
+  Output: Neo4j Knowledge Graph
+  NOT: Document files
+end note
+
+@enduml
+
+---

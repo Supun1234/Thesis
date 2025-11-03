@@ -1,0 +1,57 @@
+@startuml REMP_DataFlow_EndToEnd
+!theme cerulean-outline
+
+title End-to-End REMP - Data Flow Diagram
+
+' External Entities
+rectangle "User/Stakeholder" as User
+
+' Processes
+rectangle "1.0\nInput Enhancement\n(GAI)" as P1
+rectangle "2.0\nAGR Extraction\n(BERT NER)" as P2
+rectangle "3.0\nClassification\n(NoRBERT)" as P3
+rectangle "4.0\nQuality Validation" as P4
+rectangle "5.0\nNeo4j Storage" as P5
+rectangle "6.0\nTraceability\nDiscovery (GAI)" as P6
+
+' Data Stores
+database "D1: Neo4j\nKnowledge Graph" as D1
+database "D2: Vector\nEmbeddings" as D2
+database "D3: Quality\nRules" as D3
+
+' Data Flows
+User --> P1 : Raw requirement text\n(incomplete/vague)
+P1 --> P2 : Complete requirement text
+P2 --> P3 : AGR triplet\n(Actor-Goal-Rationale)
+P3 --> P4 : Classification\n(FR/NFR + subtype)
+P4 --> P5 : Validated requirement\n(quality >= 0.90)
+P5 --> D1 : Store requirement node
+P5 --> D2 : Store embeddings
+P5 --> P6 : Requirement data
+P6 --> D1 : Store traceability links
+
+' Feedback loops
+P2 ..> P1 : Clarification needed
+P3 ..> P1 : Ambiguity detected
+P4 ..> P1 : Quality improvement
+D3 --> P4 : Quality rules
+
+' Output
+D1 --> User : Query results\n(Cypher/NL)
+
+note right of P1
+  GAI Enhancement:
+  - Complete partial input
+  - Clarify ambiguities
+  - Improve quality
+end note
+
+note right of D1
+  PRIMARY OUTPUT:
+  Queryable graph with:
+  - Structured requirements
+  - Classifications
+  - Traceability
+end note
+
+@enduml

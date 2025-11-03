@@ -1,0 +1,74 @@
+@startuml REMP_UseCase_EndToEnd
+!theme cerulean-outline
+
+title GAI-Enhanced End-to-End REMP - Use Cases
+
+left to right direction
+
+actor "Stakeholder" as Stakeholder
+actor "Requirements Engineer" as RE
+actor "Project Manager" as PM
+actor "Developer" as Dev
+
+rectangle "End-to-End REMP System" {
+    usecase "Submit Partial\nRequirement" as UC1
+    usecase "Complete Input\n(GAI)" as UC2
+    usecase "Extract AGR\nComponents" as UC3
+    usecase "Classify FR/NFR" as UC4
+    usecase "Validate Quality" as UC5
+    usecase "Review Flagged\nRequirements" as UC6
+    usecase "Store in Neo4j\nGraph" as UC7
+    usecase "Discover Traceability\n(GAI)" as UC8
+    usecase "Query Graph\n(Natural Language)" as UC9
+    usecase "Export Graph Data" as UC10
+    usecase "Visualize Traceability" as UC11
+}
+
+' Stakeholder use cases
+Stakeholder --> UC1
+UC1 ..> UC2 : <<extend>>\nif incomplete
+
+' Requirements Engineer use cases
+RE --> UC3
+RE --> UC4
+RE --> UC5
+RE --> UC6
+RE --> UC7
+
+' Project Manager use cases
+PM --> UC8
+PM --> UC9
+PM --> UC11
+
+' Developer use cases
+Dev --> UC9
+Dev --> UC10
+Dev --> UC11
+
+' System relationships
+UC2 --> UC3 : triggers
+UC3 --> UC4 : triggers
+UC4 --> UC5 : triggers
+UC5 --> UC7 : if validated
+UC5 ..> UC6 : <<extend>>\nif issues
+UC7 --> UC8 : triggers
+UC8 --> UC9 : enables
+
+note right of UC2
+  GAI Enhancement:
+  Completes partial input
+  NOT document generation
+end note
+
+note right of UC8
+  GAI Enhancement:
+  Discovers semantic links
+  in Neo4j graph
+end note
+
+note bottom of UC7
+  PRIMARY OUTPUT:
+  Neo4j Knowledge Graph
+end note
+
+@enduml

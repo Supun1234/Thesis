@@ -1,0 +1,107 @@
+@startuml REMP_Sequence_EndToEnd
+!theme cerulean-outline
+
+title GAI-Enhanced End-to-End REMP - Process Flow
+
+actor User
+participant "Pipeline" as Pipeline
+participant "GAI\nEnhancer" as GAI
+participant "BERT\nExtractor" as BERT
+participant "NoRBERT\nClassifier" as NoRBERT
+participant "Validator" as Validator
+participant "Neo4j\nGraph" as Neo4j
+
+User -> Pipeline: process_requirement(text)
+activate Pipeline
+
+' Phase 1: Input Quality Enhancement
+Pipeline -> Pipeline: check_input_completeness()
+alt Input is incomplete/partial
+    Pipeline -> GAI: complete_partial_input(text)
+    activate GAI
+    note right: Generate complete requirement
+    GAI --> Pipeline: complete_requirement
+    deactivate GAI
+end
+
+' Phase 2: Extraction
+Pipeline -> BERT: extract_agr(text)
+activate BERT
+BERT -> BERT: dual_ner_extraction()
+BERT --> Pipeline: agr_triplet
+deactivate BERT
+
+' Phase 3: Ambiguity Check
+alt Extraction confidence < 0.90
+    Pipeline -> GAI: clarify_ambiguity(text)
+    activate GAI
+    note right: Make requirement specific
+    GAI --> Pipeline: clarified_text
+    deactivate GAI
+    
+    Pipeline -> BERT: extract_agr(clarified_text)
+    activate BERT
+    BERT --> Pipeline: improved_agr
+    deactivate BERT
+end
+
+' Phase 4: Classification
+Pipeline -> NoRBERT: classify(agr.goal)
+activate NoRBERT
+NoRBERT --> Pipeline: classification
+deactivate NoRBERT
+
+' Phase 5: Classification Validation
+alt Classification confidence < 0.90
+    Pipeline -> GAI: validate_classification(req, pred)
+    activate GAI
+    note right: Provide reasoning + boost confidence
+    GAI --> Pipeline: validation_result
+    deactivate GAI
+    
+    Pipeline -> Pipeline: combine_predictions()
+end
+
+' Phase 6: Quality Validation
+Pipeline -> Validator: validate_requirement(req)
+activate Validator
+Validator --> Pipeline: validation_report
+deactivate Validator
+
+alt Quality score < 0.90
+    Pipeline -> GAI: improve_quality(req)
+    activate GAI
+    note right: Suggest SMART improvements
+    GAI --> Pipeline: improved_requirement
+    deactivate GAI
+end
+
+' Phase 7: Store in Neo4j Graph
+Pipeline -> Neo4j: create_requirement_node(req)
+activate Neo4j
+Neo4j -> Neo4j: create_agr_nodes()
+Neo4j -> Neo4j: establish_relationships()
+Neo4j --> Pipeline: node_id
+deactivate Neo4j
+
+' Phase 8: Discover Traceability
+Pipeline -> GAI: discover_relationships([requirements])
+activate GAI
+note right: Find semantic links
+GAI --> Pipeline: traceability_links
+deactivate GAI
+
+Pipeline -> Neo4j: add_traceability_links(links)
+activate Neo4j
+Neo4j --> Pipeline: success
+deactivate Neo4j
+
+Pipeline --> User: neo4j_node_id + metadata
+note left
+  Output: Neo4j Graph Node
+  NOT: Document file
+end note
+
+deactivate Pipeline
+
+@enduml

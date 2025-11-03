@@ -1,0 +1,79 @@
+
+@startuml REMP_Deployment_EndToEnd
+!theme cerulean-outline
+
+title End-to-End REMP - Deployment Architecture
+
+node "User Device" {
+    [Web Browser] as Browser
+}
+
+node "Application Server\n(Docker Container)" {
+    [Streamlit UI] as Frontend
+    [FastAPI Backend] as Backend
+    [Celery Workers] as Workers
+}
+
+node "AI Model Server\n(GPU Instance)" {
+    [BERT NER Model] as BERTModel
+    [NoRBERT Classifier] as NoRBERTModel
+    [Model Cache] as Cache
+}
+
+node "GAI Enhancement Server" {
+    component "Local LLM\n(Ollama)" as Ollama {
+        [Llama 3 70B] as Llama
+    }
+    component "Fallback API" as API {
+        [GPT-4] as GPT4
+    }
+}
+
+node "Graph Database Cluster" {
+    database "Neo4j\n(Port 7687)" as Neo4j {
+        [Requirement Nodes]
+        [Traceability Graph]
+        [Vector Index]
+    }
+    database "PostgreSQL\n(Metadata)" as Postgres
+    database "Redis\n(Queue)" as Redis
+}
+
+cloud "External Services" {
+    [OpenAI API] as OpenAI
+    [HuggingFace] as HF
+}
+
+' Connections
+Browser --> Frontend : HTTPS
+Frontend --> Backend : REST API
+Backend --> Workers : Async Tasks
+Backend --> BERTModel : gRPC
+Backend --> NoRBERTModel : gRPC
+Backend --> Ollama : HTTP (Primary)
+Backend --> API : HTTPS (Fallback)
+Backend --> Neo4j : Bolt Protocol
+Backend --> Postgres : SQL
+Workers --> Redis : Queue
+
+API ..> OpenAI : API Call
+BERTModel ..> HF : Download
+
+note right of Neo4j
+  PRIMARY OUTPUT STORAGE:
+  - Structured requirements
+  - AGR components
+  - Classifications
+  - Traceability links
+  - Quality scores
+  NOT document files
+end note
+
+note right of Ollama
+  Privacy-First:
+  Local GAI processing
+  No data leaves server
+end note
+
+@enduml
+

@@ -1,0 +1,59 @@
+@startuml REMP_State_EndToEnd
+!theme cerulean-outline
+
+title Requirement Lifecycle - End-to-End Process
+
+[*] --> Submitted : User submits text
+
+Submitted --> InputQualityCheck : Start processing
+
+InputQualityCheck --> GAICompletion : If incomplete/vague
+GAICompletion --> Extraction : Enhanced input
+
+InputQualityCheck --> Extraction : If complete
+
+Extraction --> ExtractionValidation : AGR extracted
+
+ExtractionValidation --> GAIClarification : If confidence < 0.90
+GAIClarification --> Extraction : Re-extract
+
+ExtractionValidation --> Classification : If confidence >= 0.90
+
+Classification --> ClassificationValidation : Type assigned
+
+ClassificationValidation --> GAIValidation : If confidence < 0.90
+GAIValidation --> QualityCheck : Boosted confidence
+
+ClassificationValidation --> QualityCheck : If confidence >= 0.90
+
+QualityCheck --> GAIImprovement : If quality < 0.90
+GAIImprovement --> QualityCheck : Improved
+
+QualityCheck --> ManualReview : If critical issues
+QualityCheck --> Neo4jStorage : If quality >= 0.90
+
+ManualReview --> Neo4jStorage : After review
+ManualReview --> Rejected : If invalid
+
+Neo4jStorage --> TraceabilityDiscovery : Node created
+
+TraceabilityDiscovery --> GAIRelationships : Discover links
+GAIRelationships --> GraphComplete : Links stored
+
+GraphComplete --> [*] : Available for queries
+
+Rejected --> [*]
+
+note right of Neo4jStorage
+  PRIMARY OUTPUT:
+  Neo4j Graph Node
+  with all metadata
+end note
+
+note right of GAIRelationships
+  GAI discovers semantic
+  relationships, NOT
+  generates documents
+end note
+
+@enduml
