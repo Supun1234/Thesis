@@ -6,7 +6,7 @@ This system implements an end-to-end AI agent for automating requirements engine
 
 ## Technology Stack
 
-- **Gemini 2.0 Flash**: Used as GAI (Generative AI) for intelligent interventions
+- **Gemini 2.5 pro**: Used as GAI (Generative AI) for intelligent interventions
 - **BERT/RemBERT**: NER model for Actor-Goal-Rationale extraction
 - **NoRBERT**: Fine-tuned model for FR/NFR classification
 - **Neo4j**: Knowledge graph database for requirement storage
