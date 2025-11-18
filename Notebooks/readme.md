@@ -18,7 +18,7 @@ Gemini API is strategically integrated at four critical decision points in the p
 
 1. **Phase 1 (Input Quality)**: Few-shot prompting to complete incomplete requirements while preserving original meaning and avoiding over-engineering
 2. **Phase 2 (Extraction)**: Few-shot validation to clarify ambiguous Actor-Goal-Rationale extractions when BERT confidence < 0.85
-3. **Phase 3 (Classification)**: Chain-of-thought reasoning to validate FR/NFR classification when NoRBERT confidence < 0.85
+3. **Phase 3 (Classification)**: Few-shot reasoning to validate FR/NFR classification when NoRBERT confidence < 0.85
 4. **Phase 6 (Traceability)**: Semantic analysis to discover relationships (DEPENDS_ON, RELATES_TO, REFINES) between requirements
 
 The prompt engineering approach emphasizes: (a) keeping enhancements minimal and contextual, (b) JSON-structured outputs for reliable parsing, (c) explicit constraints to prevent hallucination, and (d) length validation to avoid over-detailed responses.
